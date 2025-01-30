@@ -15,7 +15,7 @@ final class ToDoItem {
     var isCompleted: Bool
     var isCritical: Bool
     
-    init(title: String, timestamp: Date = .now, isCompleted: Bool = false, isCritical: Bool = false) {
+    init(title: String = "", timestamp: Date = .now, isCompleted: Bool = false, isCritical: Bool = false) {
         self.title = title
         self.timestamp = timestamp
         self.isCompleted = isCompleted
