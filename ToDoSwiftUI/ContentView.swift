@@ -12,6 +12,7 @@ struct ContentView: View {
     @Environment(\.modelContext) var context
     
     @State var showCreateView = false
+    @State var toDoItemToEdit: ToDoItem?
     @Query private var items: [ToDoItem]
     
     var body: some View {
@@ -39,7 +40,9 @@ struct ContentView: View {
                         Spacer()
                         
                         Button {
-                            
+                            withAnimation {
+                                item.isCompleted.toggle()
+                            }
                         } label: {
                             Image(systemName: "checkmark")
                                 .symbolVariant(.circle.fill)
@@ -55,6 +58,13 @@ struct ContentView: View {
                             }
                         } label: {
                             Label("Delete", systemImage: "trash")
+                        }
+                        
+                        Button {
+                            toDoItemToEdit = item
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                                .tint(.orange)
                         }
                     }
                 }
@@ -75,6 +85,10 @@ struct ContentView: View {
                 }
                 .presentationDetents([.medium])
             }
+            .sheet(item: $toDoItemToEdit) { item in
+                UpdateToDoView(item: item)
+            }
+
         }
         .padding()
     }
